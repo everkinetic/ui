@@ -1,0 +1,192 @@
+/* NAVBAR */
+
+.counter {
+  float: right;
+}
+
+/* FILTER */
+
+.filter--container {
+  padding-left: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.filter--container--group {
+  display: inline-block;
+  padding-right: 16px;
+}
+
+/* LIST */
+
+.spinner {
+    margin: 32px auto;
+    animation: spinner 1.6s linear infinite;
+}
+
+
+/* DIALOG */
+
+body.dialog-visible {
+  overflow: hidden;
+}
+
+.dialog-visible .itemview-container {
+  display: block;
+}
+
+dialog {
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.itemview-container {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+.itemview {
+  margin: 16px;
+  padding: 16px;
+  min-width: calc(100% - 64px);
+  min-height: calc(100% - 64px);
+  background-color: white;
+}
+
+.itemview .grid {
+  display: flex;
+}
+
+.itemview .grid .ingredients {
+  padding-right: 24px;
+  min-width: 180px;
+}
+
+.ingredients, .steps ol li {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.ingredients .quantity {
+    min-width: 26px;
+    display: inline-block;
+    text-align: right;
+}
+.ingredients .unit {
+    min-width: 40px;
+    display: inline-block;
+}
+
+.itemview ul, .itemview ol {
+  padding-left: 1.5em;
+}
+
+.itemview li {
+  cursor: pointer;
+}
+
+.itemview li.done {
+  text-decoration: line-through;
+  color: #ccc;
+  font-style: italic;
+}
+
+/* CARD */
+
+.mdl-layout__content {
+  margin: 0 16px 16px 16px;
+}
+
+.mdl-card__square.mdl-card,
+.mdl-card__square.mdl-card:hover,
+.mdl-card__square.mdl-card:focus {
+  width: 280px;
+  height: 240px;
+  margin: 12px;
+  text-decoration: none;
+}
+
+.mdl-card__square .mdl-card__title {
+  opacity: 1;
+  transition: all 0.3s ease;
+
+  background-color: #ff5722;
+  background-position: center center;
+  background-size: cover;
+  text-transform: uppercase;
+}
+/* line 91, gallery.scss */
+.mdl-card__square > .mdl-card__title:hover {
+  opacity: 0.8;
+}
+
+.mdl-card__title .mdl-card__title-text {
+  font-weight: 300;
+
+  background: rgba(0, 0, 0, 0.50);
+  color: black;
+  color: #fff;
+  padding: 2px 6px;
+
+  font-size: 16px;
+}
+
+.mdl-card__square .mdl-card__supporting-text {
+  padding: 8px
+}
+
+.mdl-card__supporting-text .grid {
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px 0;
+}
+
+.mdl-card__supporting-text .grid__centered {
+    justify-content: center;
+}
+
+.mdl-card__supporting-text .cell {
+  display: flex;
+  align-items: center;
+}
+
+.mdl-card__supporting-text .material-icons {
+  padding-right: 8px;
+}
+
+.item--rating--text {
+  font-style: italic;
+}
+
+.button--favorite {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #bfbaba;
+}
+
+.favorite .button--favorite {
+  color: #ffeb3b;
+}
+
+
+/* HELPERS */
+
+.invisible {
+  visible: hidden;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}

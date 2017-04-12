@@ -1,0 +1,170 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="robots" content="noindex,follow" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Everkinetic</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-red.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+        <!-- item template via jsrender -->
+        <script type="text/x-jsrender" id="itemTemplate">
+            <a class="mdl-card__square mdl-card mdl-shadow--2dp" data-name="{{:name}}" href="{{:url}}" target="_blank">
+                <!-- top -->
+                <div class="mdl-card__title mdl-card--expand b-lazy" data-src="{{:image}}">
+                    <h2 class="mdl-card__title-text item--title">{{:title}}</h2>
+                </div>
+                <!-- bottom -->
+                <div class="mdl-card__supporting-text mdl-card__actions mdl-card--border">
+<!--                     <div class="grid grid__centered">
+                        <div class="item--duration cell">
+                            <div class="item--duration--text">{{:primer}}</div>
+                        </div>
+                    </div> -->
+                    <div class="grid">
+                        <div class="item--rating cell">
+                            <div class="item--rating--text">{{:primary}}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </script>
+
+    </head>
+
+    <body>
+
+      <!-- Always shows a header, even in smaller screens. -->
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Everkinetic</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation">
+<div class="filter--container--group">
+                      <div class="mdl-textfield mdl-js-textfield">
+<!--                           <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+                              <i class="material-icons">search</i>
+                            </label> -->
+                        <input class="mdl-textfield__input" type="text" id="search">
+                        <label class="mdl-textfield__label" for="search" id="search--label">Suche...</label>
+                      </div>
+                    </div>
+                    <a class="mdl-navigation__link counter" href=""></a>
+
+                </nav>
+            </div>
+        </header>
+
+        <main class="mdl-layout__content">
+
+          <div class="page-content">
+
+            <section class="grid--container content-grid ">
+                <div class="mdl-grid">
+                    <i class="material-icons spinner">cached</i>
+                </div>
+            </div>
+
+        </main>
+      </div>
+
+            <div class="itemview-container">
+        </div>
+
+      <script src="js/jquery.min.js"></script>
+      <script src="js/isotope.pkgd.min.js"></script>
+      <script src="//cdn.jsdelivr.net/blazy/latest/blazy.min.js"></script>
+      <script src="js/lodash.min.js"></script>
+
+      <script src="js/jsrender.min.js"></script>
+      <script src="//code.getmdl.io/1.3.0/material.min.js"></script>
+      <script src="js/main.js"></script>
+
+
+    <script type="text/x-jsrender" id="itemviewTemplate">
+        <a class="mdl-card__square mdl-card mdl-shadow--2dp" data-id="{{:id}}" href="{{:url}}" target="_blank">
+            <!-- top -->
+            <div class="mdl-card__title mdl-card--expand b-lazy" data-src="{{:image}}">
+                <h2 class="mdl-card__title-text item--title">{{:name}}</h2>
+            </div>
+            <!-- bottom -->
+            <div class="mdl-card__supporting-text">
+                <div class="grid">
+       <!--              <div class="item--price cell">
+                        <i class="material-icons">pan_tool</i>
+                        <div class="item--price--text">{{:time.active}} min</div>
+                    </div> -->
+                    <div class="item--price cell">
+                        <i class="material-icons">update</i>
+                        <div class="item--price--text">{{:time.active}} / {{:time.passive}} min</div>
+                    </div>
+                     <div class="item--kcal cell">
+                        <i class="material-icons">local_offer</i>
+                        <div class="item--price--text">{{:kilocalories}} kcal</div>
+                    </div>
+                    <div class="item--rating cell">
+                        <i class="material-icons">restaurant_menu</i>
+                        <div class="item--serving--text">{{:servings}}</div>
+                    </div>
+<!--                     <div class="item--rating cell">
+                        <i class="material-icons">highlight_off</i>
+                        <div class="item--rating--text">Thermomix</div>
+                    </div>
+ -->                </div>
+                <div class="grid grid__centered">
+                    <div class="item--duration cell">
+                        <!-- <i class="material-icons">drive_eta</i> -->
+                        <div class="item--duration--text" data-value="{{:durationValue}}'">{{:duration}}</div>
+                    </div>
+                </div>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  button--favorite  mdl-button--colored" data-since="{{:since}}">
+            <!-- ['soon', 'today', 'pos. numeric'] -->
+            {{if since < 0 }} soon {{else since === 0}} today {{else}} {{:since}} {{/if}}
+            </button>
+        </a>
+    </script>
+
+    <script type="text/x-jsrender" id="itemTemplate">
+    <div class="itemview">
+            <!-- top -->
+            <h2 class="mdl-card__title-text item--title">{{:name}}</h2>
+            <!-- bottom -->
+            <div class="grid">
+
+                <div class="cell ingredients">
+                    <h4>Ingredients</h4>
+                    {{for ingredients}}
+                        <div>
+                            <em class="quantity">{{>quantity}}</em>
+                            <em class="unit">{{>unit}}</em>
+                            <em class="name">{{>name}}</em>
+                        </div>
+                    {{/for}}
+                </div>
+
+                <div class="cell steps">
+                    <h4>Steps</h4>
+                    <ol>
+                    {{for steps}}
+                        <li>{{:#data}}</li>
+                    {{/for}}
+                    </ol>
+                </div>
+            </div>
+    </div>
+    </script>
+
+    </body>
+</html>

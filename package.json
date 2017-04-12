@@ -1,0 +1,14 @@
+{
+  "name": "everkinetic-web",
+  "version": "1.0.0",
+  "description": "poc",
+  "scripts": {
+    "start": "http-server -o"
+  },
+  "dependencies": {
+    "everkinetic-data": "file:../everkinetic-data"
+  },
+  "private": true,
+  "author": "Frank Paczynski <frank@solygen.de> (https://github.com/solygen)",
+  "license": "Unlicense"
+}
