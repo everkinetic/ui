@@ -1,65 +1,49 @@
 'use strict'
 
 var filters = {},
-    view, hash, itemview;
-
+    listview, itemview;
 var base = 'node_modules/everkinetic-data/dist/';
 
 $(function ready () {
-    view.init();
+    listview.init();
     itemview.init();
 
-    $.getJSON(base + 'exercises.json').then($.proxy(view.render, view));
+    // data and deep links
+    $.getJSON(base + 'exercises.json')
+        .then($.proxy(listview.render, listview))
+        .then(function () { _.defer(onHashChange); });
 
     $('body').on('click', 'a.mdl-card__square', function (e) {
         var node = $(e.currentTarget);
-        itemview.render(node.data());
+        var data = node.data();
+        // itemview.render(data);
+        location.hash = data.name;
         e.preventDefault();
     });
 
-    $(document).keyup(function(e) {
-      if (e.keyCode === 27) itemview.hide();
-    });
+    $(document)
+        .keyup(function(e) {
+          if (e.keyCode !== 27) return;
+          itemview.hide();
+        })
+        .on('click', '.action--close', itemview.hide.bind(itemview))
+
+    window.addEventListener('hashchange', onHashChange, false);
 });
 
-hash = {
+function onHashChange() {
+    var value = location.hash.split('#')[1];
+    // history back
+    if (!value) return itemview.hide();
+    // deep links and clicks
+    var node = listview.$el.find('[href="#' + value + '"]');
+    if (!node.length) return;
 
-    add: function (id) {
-        hash.set(id, true);
-    },
+    itemview.render(node.data());
+}
 
-    set: function (id, data) {
-        if (!data) return hash.remove(id);
-        localStorage.setItem(id, JSON.stringify(data));
-    },
-
-    remove: function (id) {
-        localStorage.removeItem(id)
-    },
-
-    get: function (id) {
-        var value = localStorage.getItem(id);
-        if (!value) return;
-        return JSON.parse(value);
-    },
-
-    toggle: function (id) {
-        if (hash.has(id)) return hash.remove(id);
-        hash.add(id);
-    },
-
-    keys: function () {
-        return Object.keys(localStorage);
-    },
-
-    has: function (id) {
-        return !!hash.get(id);
-    }
-
-};
-
-// pseude backbone view
-view = {
+// pseudo backbone listview
+listview = {
 
     $el: $('.mdl-grid'),
 
@@ -69,7 +53,8 @@ view = {
             effect : 'fadeIn'
         });
         this.ui = {
-            counter: $('.counter')
+            counter: $('.counter'),
+            filter: $('.filter--container')
         };
         this.register();
     },
@@ -78,20 +63,21 @@ view = {
         this.$el.isotope({
             itemSelector: '.mdl-card__square',
             layoutMode: 'fitRows',
-            sortby: 'beds',
+            sortby: 'since',
             getSortData: {
                 name: '.item--title',
                 duration: '.item--duration--text[data-value]',
                 rating: '.item--rating--text',
                 price: '.item--price--text',
-                //beds: '.item--beds--text[data-value]',
-                beds : function($elem){
-                    return parseInt($($elem).find('.item--rating--text').text().replace(' kcal'), 10)
+                since : function($elem) {
+                    var value = parseInt($($elem).find('.button--favorite').attr('data-since'), 10);
+                    value = $.isNumeric(value) ? value : 0;
+                    return value * (1);
                 }
             }
         });
 
-        this.$el.isotope({ sortBy: 'beds' });
+        this.$el.isotope({ sortBy: 'name' });
     },
 
     applyFilter: function () {
@@ -100,9 +86,10 @@ view = {
         for (var prop in filters) {
             filterValue += filters[prop];
         }
+
         // set filter for Isotope
         this.$el.isotope({
-            sortBy: 'beds',
+            sortBy: filterValue === '.favorite' ? 'since' : 'name',
             filter: filterValue
         });
     },
@@ -144,21 +131,14 @@ view = {
         this.$el.on('click', '.button--favorite', function (e) {
             var base = $(e.target).closest('.mdl-card__square'),
                 id = base.attr('data-id');
-            base.toggleClass('favorite');
-            hash.toggle(id);
-            self.applyFilter();
-            e.stopPropagation()
-            e.stopImmediatePropagation()
-            e.preventDefault()
+            return false;
         });
-
-
 
         this.$el.on('arrangeComplete', $.proxy(this.onArrangeComplete, this));
     },
 
     onArrangeComplete: function () {
-        this.ui.counter.text($('.mdl-card__square:visible').length + ' Treffer');
+        this.ui.counter.text($('.mdl-card__square:visible').length + ' Hits');
         this.bLazy.revalidate();
     },
 
@@ -169,11 +149,26 @@ view = {
         this.initIsotope();
     },
 
+    processData: function (data) {
+       // add primaray image for listview
+       if (data.svg && data.svg.length) {
+            data.image = base + data.svg[0];
+            data.svg = _.map(data.svg, function (path) {
+                return base + path;
+            });
+        }
+        // comma separated list
+        _.each(['primary', 'secondary', 'equipment'], function (prop) {
+            if (data[prop] && _.isArray(data[prop]) && data[prop].length > 1) data[prop] = data[prop].join(', ');
+        });
+    },
+
     renderItem: function (index, data) {
+        this.processData(data);
 
-        if (data.svg && data.svg.length) data.image = base + data.svg[0];
+        var node = $($.templates('#itemviewTemplate').render(data));
 
-        var node = $($.templates('#itemTemplate').render(data));
+        node.data(data);
 
         this.$el.append(node);
     }
@@ -212,21 +207,10 @@ itemview = {
     render: function (data) {
         this.$el.empty();
         this.show();
-        var node = $($.templates('#itemTemplate').render(data));
-
-        // highlight thermomix parts
-        _.each(node.find('li'), function (line) {
-            var line = $(line);
-            var text = line.text().replace(/(\([^)]+\))/g, '<b>$1</b>');
-            line.html(text);
-        });
-
-        this.$el.append(node);
+        this.$el.append(
+            $($.templates('#itemTemplate').render(data))
+        );
     }
 };
-
-
-
-
 
 

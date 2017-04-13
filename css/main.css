@@ -1,34 +1,34 @@
 /* NAVBAR */
 
+#search, #search--label {
+  color: white;
+}
+
+#search {
+  border-bottom: 1px solid white;
+
+}
+
 .counter {
   float: right;
+  min-width: 80px;
 }
 
-/* FILTER */
-
-.filter--container {
-  padding-left: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-}
-
-.filter--container--group {
-  display: inline-block;
-  padding-right: 16px;
-}
-
-/* LIST */
-
-.spinner {
-    margin: 32px auto;
-    animation: spinner 1.6s linear infinite;
+.mdl-card:not(.tm) .item--rating {
+  visibility: hidden;
 }
 
 
-/* DIALOG */
+/*BODY*/
+
+h4 {
+  font-weight: 300;
+}
+
+body {
+  font-weight: 300;
+  color: #333;
+}
 
 body.dialog-visible {
   overflow: hidden;
@@ -37,6 +37,8 @@ body.dialog-visible {
 .dialog-visible .itemview-container {
   display: block;
 }
+
+/* DIALOG */
 
 dialog {
   position: fixed;
@@ -66,14 +68,10 @@ dialog {
 
 .itemview .grid {
   display: flex;
+  flex-direction: column;
 }
 
-.itemview .grid .ingredients {
-  padding-right: 24px;
-  min-width: 180px;
-}
-
-.ingredients, .steps ol li {
+.cell, .cell ol, .cell ul  {
   font-size: 16px;
   font-weight: 300;
 }
@@ -102,16 +100,53 @@ dialog {
   font-style: italic;
 }
 
+/* FILTER */
+
+.filter--container {
+  padding-left: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.filter--container--group {
+  display: inline-block;
+  padding-right: 16px;
+}
+
+/* LIST */
+
+.spinner {
+    margin: 32px auto;
+    animation: spinner 1.6s linear infinite;
+}
+
+/* ACTIONS */
+
+.action--close {
+    position: absolute;
+    right: 48px;
+    top: 48px;
+    text-decoration: none;
+    color: gray;
+}
+
+.action--close .material-icons {
+    font-size: 40px;
+}
+
 /* CARD */
 
 .mdl-layout__content {
-  margin: 0 16px 16px 16px;
+  margin: 0 8px 8px 8px;
 }
 
 .mdl-card__square.mdl-card,
 .mdl-card__square.mdl-card:hover,
 .mdl-card__square.mdl-card:focus {
-  width: 280px;
+  width: 360px;
   height: 240px;
   margin: 12px;
   text-decoration: none;
@@ -121,7 +156,9 @@ dialog {
   opacity: 1;
   transition: all 0.3s ease;
 
-  background-color: #ff5722;
+  padding: 6px;
+  background-color: rgb(96,125,139);
+  background-color: white;
   background-position: center center;
   background-size: cover;
   text-transform: uppercase;
@@ -132,24 +169,24 @@ dialog {
 }
 
 .mdl-card__title .mdl-card__title-text {
-  font-weight: 300;
+  color: #fff;
+  font-weight: 400;
 
   background: rgba(0, 0, 0, 0.50);
-  color: black;
-  color: #fff;
+  color: white;
   padding: 2px 6px;
 
   font-size: 16px;
 }
 
 .mdl-card__square .mdl-card__supporting-text {
-  padding: 8px
+  //padding: 8px 2px;
 }
 
 .mdl-card__supporting-text .grid {
     display: flex;
     justify-content: flex-end;
-    padding: 4px 0;
+    //padding: 4px 0;
 }
 
 .mdl-card__supporting-text .grid__centered {
@@ -165,7 +202,7 @@ dialog {
   padding-right: 8px;
 }
 
-.item--rating--text {
+.item--price--text {
   font-style: italic;
 }
 
@@ -175,11 +212,6 @@ dialog {
   right: 16px;
   color: #bfbaba;
 }
-
-.favorite .button--favorite {
-  color: #ffeb3b;
-}
-
 
 /* HELPERS */
 
