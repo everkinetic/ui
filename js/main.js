@@ -185,6 +185,7 @@ itemview = {
 
     hide: function () {
         $(document.body).removeClass('dialog-visible');
+        location.hash = '#';
     },
 
     show: function () {
