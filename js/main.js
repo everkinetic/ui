@@ -54,7 +54,7 @@ listview = {
         });
         this.ui = {
             counter: $('.counter'),
-            filter: $('.filter--container')
+            filter: $('.mdl-layout__tab-bar')
         };
         this.register();
     },
@@ -86,10 +86,9 @@ listview = {
         for (var prop in filters) {
             filterValue += filters[prop];
         }
-
+        debugger;
         // set filter for Isotope
         this.$el.isotope({
-            sortBy: filterValue === '.favorite' ? 'since' : 'name',
             filter: filterValue
         });
     },
@@ -111,20 +110,14 @@ listview = {
     register: function  () {
         // filters
         var self = this;
-        // $('.filter--container').on('click', '.mdl-button', function (e) {
-        //     var $this = $(this),
-        //         $buttonGroup = $this.parents('.mdl-button-group'),
-        //         filterGroup = $buttonGroup.attr('data-filter-group');
-
-        //     // set filter for group
-        //     filters[filterGroup] = $this.attr('data-filter');
-
-        //     var group = $(e.target).closest('.mdl-button-group');
-        //     group.find('.mdl-button').removeClass('mdl-button--colored');
-        //     $(e.target).closest('.mdl-button').addClass('mdl-button--colored')
-
-        //     self.applyFilter();
-        // });
+        $('.mdl-layout__tab-bar').on('click', '.mdl-layout__tab', function (e) {
+            debugger;
+            e.preventDefault();
+            var $this = $(this);
+            // set filter for group
+            filters.primary = $this.attr('data-id');
+            self.applyFilter();
+        });
 
         $('#search').on('keyup', _.debounce(self.applyQuery.bind(self), 150)),
 
@@ -161,14 +154,19 @@ listview = {
         _.each(['primary', 'secondary', 'equipment'], function (prop) {
             if (data[prop] && _.isArray(data[prop]) && data[prop].length > 1) data[prop] = data[prop].join(', ');
         });
+
+        data.flags = {};
+        if (data.equipment.length === 1 && data.equipment[0] === 'body') data.flags.body = true;
     },
 
     renderItem: function (index, data) {
         this.processData(data);
-
         var node = $($.templates('#itemviewTemplate').render(data));
 
         node.data(data);
+        _.each(data.primary, function (tag) {
+            node.addClass(tag);
+        });
 
         this.$el.append(node);
     }

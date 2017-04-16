@@ -31,16 +31,19 @@
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
                     <div class="filter--container--group">
                       <div class="mdl-textfield mdl-js-textfield">
-<!--                           <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                              <i class="material-icons">search</i>
-                            </label> -->
                         <input class="mdl-textfield__input" type="text" id="search">
                         <label class="mdl-textfield__label" for="search" id="search--label">Search...</label>
                       </div>
                     </div>
                     <a class="mdl-navigation__link counter" href=""></a>
-
                 </nav>
+            </div>
+            <div class="mdl-layout__tab-bar mdl-layout__tab-manual-switch mdl-js-ripple-effect">
+              <a href="" data-id="*" class="mdl-layout__tab is-active">All</a>
+              <a href="" data-id=".chest, .shoulders, .arms" class="mdl-layout__tab">Chest, Shoulders and Arms</a>
+              <a href="" data-id=".belly" class="mdl-layout__tab">Belly</a>
+              <a href="" data-id=".back" class="mdl-layout__tab">Back</a>
+              <a href="" data-id=".legs" class="mdl-layout__tab">Hips and Legs</a>
             </div>
         </header>
 
@@ -80,6 +83,12 @@
             <!-- bottom -->
             <div class="mdl-card__supporting-text mdl-card__actions mdl-card--border">
                 <div class="grid">
+                     <div class="item--kcal cell">
+                        {{if flags.body}}
+                        <i class="material-icons">accessibility</i>
+                        {{/if}}
+
+                    </div>
                      <div class="item--kcal cell">
                         <div class="item--price--text">{{:primary}}</div>
                     </div>

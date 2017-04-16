@@ -185,8 +185,7 @@ dialog {
 
 .mdl-card__supporting-text .grid {
     display: flex;
-    justify-content: flex-end;
-    //padding: 4px 0;
+    justify-content: space-between;;
 }
 
 .mdl-card__supporting-text .grid__centered {
