@@ -2,7 +2,7 @@
 
 var filters = {},
     listview, itemview;
-var base = 'node_modules/everkinetic-data/dist/';
+var base = 'dist/data/';
 
 $(function ready () {
     listview.init();
