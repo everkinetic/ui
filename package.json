@@ -8,7 +8,7 @@
     "update:data": "copyfiles -f node_modules/everkinetic-data/dist/exercises.json dist/data/",
     "update:svg": "copyfiles -f node_modules/everkinetic-data/dist/svg/* dist/data/svg/"
   },
-  "dependencies": {
+  "devDependencies": {
     "everkinetic-data": "https://github.com/everkinetic/data#develop",
     "copyfiles": "1.2.0"
   },
