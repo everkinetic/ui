@@ -97,12 +97,20 @@ listview = {
     applyQuery: function () {
         var query = $('#search').val().toLowerCase();
          // set filter for Isotope
+
+        function contains(a, b) {
+            return a.toLowerCase().indexOf(b.toLowerCase().trim()) > -1;
+        }
+
         this.$el.isotope({
             sortBy: 'beds',
             filter: function () {
                 if (!query) return true;
-                var text = $(this).find('.mdl-card__title-text').text();
-                return text.toLowerCase().indexOf(query) >= 0;
+                var text = $(this).find('.mdl-card__title-text').text(),
+                    qList = _.chain(query.split(' ')).uniq().compact().value(),
+                    tList = _.uniq(text.split(' ')),
+                    matches = _.intersectionWith(tList, qList, contains);
+                return matches.length >= qList.length;
             }
         });
     },
